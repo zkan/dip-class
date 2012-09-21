@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 #
 # run the C program
+# ex: perl run.pl cat.pgm
 #
 
 my $dir_code = "../code/";
