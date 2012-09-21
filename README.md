@@ -20,10 +20,14 @@ We implement a C program to
       int width;
       int height;
       tPixelType pixelType;
-      tpPixel pPixel
-    } tImage
+      tpPixel pPixel;
+    } tImage;
 
-    typedef enum {GRAY8, FLOAT1, RGB} tPixelType;
+    typedef enum {
+      GRAY8 = 1, 
+      FLOAT1 = 2, 
+      RGB = 3
+    } tPixelType;
 
 Here I follow this very nice [tutorial](http://www.chasanc.com/index.php/Coding/PGM-Image-Format.html) on how to read and write to disk the PGM binary format.
 
