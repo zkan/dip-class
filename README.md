@@ -8,4 +8,6 @@ Netpbm to convert a PNG image to PGM image
 
     $ pngtopnm cat.png | ppmtopgm > cat.pgm
 
+To use Libnetpbm, we need to install a package `libnetpbm10-dev` (version 10 is the newest at this moment). We can then use `#include <pgm.h>`
+
 
