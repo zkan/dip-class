@@ -143,7 +143,7 @@ int pgm_read_header(char *filename, int *width, int *height, int *max_color, int
     return 1;
 }
 
-int pgm_get_data(char *filename, int width, int height, int f_start, UCHAR **image_data) {
+int pgm_get_data(char *filename, int width, int height, int f_start, UCHAR *image_data) {
     FILE *fp;
     UCHAR ch;
     int i, j;
@@ -158,7 +158,7 @@ int pgm_get_data(char *filename, int width, int height, int f_start, UCHAR **ima
     for(i = 0; i < height; i++) {
         for(j = 0; j < width; j++) {
             ch = fgetc(fp);
-            image_data[i][j] = (UCHAR)ch;
+            image_data[i * width + j] = (UCHAR)ch;
         }
     }
 
@@ -167,7 +167,7 @@ int pgm_get_data(char *filename, int width, int height, int f_start, UCHAR **ima
     return 1;
 }
 
-int pgm_write_data(char *filename, int width, int height, int max_color, UCHAR **image_data) {
+int pgm_write_data(char *filename, int width, int height, int max_color, UCHAR *image_data) {
     FILE *fp;
     char str[128];
     int i, j;
@@ -215,7 +215,7 @@ int pgm_write_data(char *filename, int width, int height, int max_color, UCHAR *
     // finally, we put the data
     for(i = 0; i < height; i++) {
         for(j = 0; j < width; j++) {
-            fputc(image_data[i][j], fp);
+            fputc(image_data[i * width + j], fp);
         }
     }
     

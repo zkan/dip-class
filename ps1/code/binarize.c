@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include "pgm_utils.h"
 
+typedef unsigned char UCHAR;
+
 typedef enum {
     GRAY8  = 1, 
     FLOAT1 = 2, 
@@ -21,7 +23,7 @@ typedef struct {
     int width;
     int height;
     tPixelType pixelType;
-    UCHAR **pPixel;
+    UCHAR *pPixel;
 } tImage;
 
 void binarize(tImage *img, int threshold) {
@@ -29,11 +31,11 @@ void binarize(tImage *img, int threshold) {
 
     for(i = 0; i < img->height; i++) {
         for(j = 0; j < img->width; j++) {
-            if(img->pPixel[i][j] < threshold) {
-                img->pPixel[i][j] = (UCHAR)0;
+            if(img->pPixel[i * img->width + j] < threshold) {
+                img->pPixel[i * img->width + j] = 0;
             }
             else {
-                img->pPixel[i][j] = (UCHAR)255;
+                img->pPixel[i * img->width + j] = 255;
             }
         }
     }
@@ -44,7 +46,7 @@ int main(int argc, char *argv[]) {
     int height = 0;
     int max_color;
     int f_start;
-    UCHAR **image_data;
+    UCHAR *image_data;
     int i, j;
     int threshold = 127;
 
@@ -57,10 +59,7 @@ int main(int argc, char *argv[]) {
         printf("Max color: %d\n", max_color);
         printf("File pointer is at: %d\n\n", f_start);
 
-        image_data = (UCHAR **)malloc(height * sizeof(UCHAR *));
-        for(i = 0; i < height; i++) {
-            image_data[i] = (UCHAR *)malloc(width * sizeof(UCHAR));
-        }
+        image_data = (UCHAR *)malloc(height * width * sizeof(UCHAR));
         if(pgm_get_data(argv[1], width, height, f_start, image_data)) {
             printf("Succesfully get the PGM image data!\n\n");
 
@@ -68,15 +67,12 @@ int main(int argc, char *argv[]) {
             img.width = width;
             img.height = height;
             img.pixelType = GRAY8;
-            img.pPixel = (UCHAR **)malloc(height * sizeof(UCHAR *));
-            for(i = 0; i < height; i++) {
-                img.pPixel[i] = (UCHAR *)malloc(width * sizeof(UCHAR));
-            }
+            img.pPixel = (UCHAR *)malloc(height * width * sizeof(UCHAR));
 
             // copy data to our format
             for(i = 0; i < height; i++) {
                 for(j = 0; j < width; j++) {
-                    img.pPixel[i][j] = image_data[i][j];
+                    img.pPixel[i * width + j] = image_data[i * width + j];
                 }
             }
 
@@ -88,17 +84,10 @@ int main(int argc, char *argv[]) {
             }
 
             // free memory
-            for(i = 0; i < height; i++) {
-                free(img.pPixel[i]);
-            }
             free(img.pPixel);
-            
         }
 
         // free memory
-        for(i = 0; i < height; i++) {
-            free(image_data[i]);
-        }
         free(image_data);
     }
 
