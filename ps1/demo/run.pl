@@ -1,19 +1,28 @@
 #!/usr/bin/perl
 #
 # run the C program
-# ex: perl run.pl cat.pgm
+# example ./run.pl (need to run under the demo folder)
 #
+
+my $prog = "binarize";
 
 my $dir_code = "../code/";
 my $dir_input = "../data/input/";
 my $dir_output = "../data/output/";
 
-my $image_file = $ARGV[0];
-my $input_image = $dir_input . $image_file;
-my $output_image = $dir_output . $image_file;
+my $input_image1 = $dir_input . "cat.pgm";
+my $input_image2 = $dir_input . "cat_lick.pgm";
+my $input_image3 = $dir_input . "sea_lion.pgm";
 
-my $prog = "binarize";
+my $output_image1 = $dir_output . "cat.pgm";
+my $output_image2 = $dir_output . "cat_lick.pgm";
+my $output_image3 = $dir_output . "sea_lion.pgm";
 
-system("rm $output_image");
-system($dir_code . $prog . " $input_image $output_image");
+system("rm $output_image1");
+system("rm $output_image2");
+system("rm $output_image3");
+
+system($dir_code . $prog . " $input_image1 $output_image1");
+system($dir_code . $prog . " $input_image2 $output_image2");
+system($dir_code . $prog . " $input_image3 $output_image3");
 
