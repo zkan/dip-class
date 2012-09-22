@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     // read the PGM image header
     if(pgm_read_header(argv[1], &width, &height, &max_color, &f_start)) {
         printf("Succesfully read the header!\n");
-        printf("Confirm! This is a PGM image file.\n");
+        printf("Confirm! %s is a PGM image file.\n", argv[1]);
     }
 
     return 1;
