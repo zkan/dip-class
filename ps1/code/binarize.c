@@ -5,6 +5,7 @@
  *  Credit: www.chasanc.com/index.php/Coding/PGM-Image-Format.html
  *  References:
  *      * http://netpbm.sourceforge.net/doc/pgm.html
+ *      * http://en.wikipedia.org/wiki/Netpbm_format
  *      * http://www.asciitable.com/
  */
 
