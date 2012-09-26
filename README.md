@@ -10,7 +10,7 @@ We implement a C program to
 
 1. read PGM file from disk;
 2. convert PGM data structure to our format;
-3. binarize it ( and );
+3. binarize it ( 0-127 -> 0 and 128-255 -> 1 );
 4. convert back to PGM format;
 5. write to disk.
 
