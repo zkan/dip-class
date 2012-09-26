@@ -18,8 +18,11 @@ prog.o: prog.c dip_image.h
 prog: pgm_utils.o binarize.o prog.o 
 	$(CC) pgm_utils.o binarize.o prog.o -o prog
 
-prog_using_libnetpbm: prog_using_libnetpbm.c
-	$(CC) prog_using_libnetpbm.c -o prog_using_libnetpbm -lnetpbm
+prog_using_libnetpbm.o: prog_using_libnetpbm.c dip_image.h
+	$(CC) -c prog_using_libnetpbm.c
+
+prog_using_libnetpbm: binarize.o prog_using_libnetpbm.o
+	$(CC) binarize.o prog_using_libnetpbm.o -o prog_using_libnetpbm -lnetpbm
 
 pgm_image_test: pgm_image_test.c pgm_utils.o
 	$(CC) pgm_image_test.c pgm_utils.o -o pgm_image_test
