@@ -3,17 +3,23 @@
 # 
 CFLAGS = -g -Wall
 CC = gcc $(CFLAGS)
-PROG = binarize pgm_image_test
+PROG = prog prog_using_libnetpbm pgm_image_test
 all: $(PROG)
 
 pgm_utils.o: pgm_utils.c pgm_utils.h
 	$(CC) -c pgm_utils.c
 
-binarize.o: binarize.c
+binarize.o: binarize.c binarize.h dip_image.h
 	$(CC) -c binarize.c
 
-binarize: binarize.o pgm_utils.o
-	$(CC) binarize.o pgm_utils.o -o binarize
+prog.o: prog.c dip_image.h
+	$(CC) -c prog.c
+
+prog: pgm_utils.o binarize.o prog.o 
+	$(CC) pgm_utils.o binarize.o prog.o -o prog
+
+prog_using_libnetpbm: prog_using_libnetpbm.c
+	$(CC) prog_using_libnetpbm.c -o prog_using_libnetpbm -lnetpbm
 
 pgm_image_test: pgm_image_test.c pgm_utils.o
 	$(CC) pgm_image_test.c pgm_utils.o -o pgm_image_test
