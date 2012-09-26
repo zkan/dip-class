@@ -42,6 +42,6 @@ We can use Netpbm to convert a PNG image to PGM image. Just run the following co
 
 To use Libnetpbm, we need to install a package `libnetpbm10-dev` 
 (version 10 is the newest at this moment). We can then use `#include <pgm.h>` 
-in the code. 
+in the code. When compile, we need to link the library. Simply add `-lnetpbm`. 
 
 
