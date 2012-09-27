@@ -60,8 +60,8 @@ int get_file_size(FILE *fp) {
 int pgm_read_header(char *filename, int *width, int *height, int *max_color, int *f_start) {
     FILE *fp;
 
-    // the number should not be larger than 5 digits
-    char ch_width[5], ch_height[5], ch_max_color[5];
+    // the number should not be larger than 6 digits
+    char ch_width[6], ch_height[6], ch_max_color[6];
     unsigned char ch;
     int i = 0;
     int file_size;
@@ -69,6 +69,7 @@ int pgm_read_header(char *filename, int *width, int *height, int *max_color, int
     // read a binary file
     if((fp = fopen(filename, "rb")) == NULL) {
         fprintf(stderr, "\nERROR! Couldn't open image file\n");
+        exit(1);
     }
 
     file_size = get_file_size(fp);
