@@ -23,6 +23,32 @@ int main(int argc, char *argv[]) {
     int i, j;
     gray **pgm_data;
     int threshold = 127;
+    
+    int c;
+    extern char *optarg;
+    extern int optind;
+
+    while((c = getopt(argc, argv, "t:")) != EOF) {
+        switch( c ) {
+            case 't':
+                sscanf(optarg, "%d", &threshold);
+                break;
+		}
+	}
+
+//    printf("argc: %d\n", argc);
+//    printf("optind: %d\n", optind);
+//    printf("threshold: %d\n", threshold);
+
+    // optind -- index in argv of the first argv-element that is not an option
+    if((argc - optind) != 2) {
+        fprintf(stderr, "Usage error\n");
+        fprintf(stderr, "Usage: %s <input image> <output image>\n", argv[0]);
+        fprintf(stderr, "Option:\n");
+        fprintf(stderr, "-t <threshold>\n");
+
+        exit(1);
+    }
 
     // all PGM programs must call pgm_init() just after invocation, 
     // before they process their arguments.
@@ -30,22 +56,25 @@ int main(int argc, char *argv[]) {
 
     // PBM function for reading, which is almost equivalent 
     // to f = fopen(filename, "rb");
-    fp = pm_openr(argv[1]);
+    fp = pm_openr(argv[optind]);
 
     // read the PGM image header
     pgm_readpgminit(fp, &width, &height, &maxval, &format);
 
-    printf("PGM Image Information\n");
+    printf("Succesfully read the header!\n\n");
+    printf("= PGM image information =\n");
     printf("Width: %d\n", width);
     printf("Height: %d\n", height);
-    printf("Maxval: %d\n", maxval);
-    printf("Format: P%c\n", PGM_FORMAT_TYPE(format));
+    printf("Max color: %d\n", maxval);
+    printf("Format: P%c\n\n", PGM_FORMAT_TYPE(format));
 
     // close then open file again for reading data
     fclose(fp);
-    fp = pm_openr(argv[1]);
+    fp = pm_openr(argv[optind]);
     
     pgm_data = pgm_readpgm(fp, &width, &height, &maxval);
+    
+    printf("Succesfully get the PGM image data!\n\n");
 
     tImage img;
     img.width = width;
@@ -60,7 +89,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    binarize(&img, threshold);
+    img = binarize(img, threshold);
 
     // convert back to the pgm format
     for(i = 0; i < height; i++) {
@@ -69,7 +98,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    fp_out = pm_openw(argv[2]);
+    fp_out = pm_openw(argv[optind + 1]);
 
     // forceplain is a logical value that tells pgm_writepgminit() to 
     // write a header for a plain PGM format file, as opposed to a raw 
@@ -77,6 +106,8 @@ int main(int argc, char *argv[]) {
     // 1 -> not a binary format
     int forceplain = 0;
     pgm_writepgm(fp_out, pgm_data, width, height, maxval, forceplain);
+    
+    printf("Succesfully write the binarized PGM image to disk!\n\n");
 
     free(img.pPixel);
     fclose(fp);
