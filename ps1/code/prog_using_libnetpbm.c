@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
     printf("Width: %d\n", width);
     printf("Height: %d\n", height);
     printf("Max color: %d\n", maxval);
-    printf("Format: P%c\n\n", PGM_FORMAT_TYPE(format));
+//    printf("Format: %c\n\n", PGM_FORMAT_TYPE(format));
 
     // close then open file again for reading data
     fclose(fp);
