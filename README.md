@@ -32,7 +32,8 @@ We implement a C program to
 This is a nice [tutorial](http://www.chasanc.com/index.php/Coding/PGM-Image-Format.html) that explains how to read and write to disk the PGM binary format. This [reference](http://fossies.org/dox/URT3.1a/dir_73a3a88a177516bb9d1c7678b440c77f.html) is also good if you want to use [Libnetpbm](http://netpbm.sourceforge.net/doc/libnetpbm.html).
 
 ## Tools 
-We can use Netpbm to convert a PNG image to PGM image. Just run the following command.
+We can use Netpbm to convert a PNG image to PGM image. Just run 
+the following command.
 
     $ pngtopnm cat.png | ppmtopgm > cat.pgm
 
